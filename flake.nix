@@ -30,5 +30,22 @@
       );
 
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+
+      nixosModules.wallrizz =
+        {
+          config,
+          lib,
+          pkgs,
+          ...
+        }:
+        import ./module.nix {
+          inherit
+            config
+            lib
+            pkgs
+            self
+            ;
+        };
+      nixosModules.default = self.nixosModules.wallrizz;
     };
 }
